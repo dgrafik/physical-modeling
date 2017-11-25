@@ -3,7 +3,7 @@
 
 //--------------------------------------------------------------
 float ofApp::resistance(int r, float v){
-    float d = -6 * 3.14 * r * v * 0.00001;
+    float d = (-6) * 3.14 * r * v * 0.001;
     return d;
 }
 
@@ -12,12 +12,12 @@ void ofApp::setup(){
     ofSetFrameRate(60); //max ?
     
     for (int i=0; i<N; i++) {
-        ball[i].x = ofGetWindowWidth()/2;
-        ball[i].y = ofGetWindowHeight()/2;
-//można zrobić losowe punkty z zakresu od r do width-r i od r do height - r, ale taki rozrzut na poącztku ładniej wygląda
+        ball[i].x = ofRandom(30, ofGetWidth()-30);
+        ball[i].y = ofRandom(30, ofGetHeight()-30);
         ball[i].vx = ofRandom(-10,10);
         ball[i].vy = ofRandom(-10,10);
-        ball[i].r = ofRandom(5,50);
+        ball[i].r = ofRandom(5,30);
+        ball[i].m = ball[i].r/20;
         ball[i].R = ofRandom(0,255);
         ball[i].G = ofRandom(0,255);
         ball[i].B = ofRandom(0,255);
@@ -28,32 +28,39 @@ void ofApp::setup(){
 void ofApp::update(){
     
     for (int i=0; i<N; i++) {
-        float vxd = (ball[i].vx * resistance(ball[i].r, ball[i].vx));
-        float vyd = (ball[i].vy * resistance(ball[i].r, ball[i].vy));
-        
-        if (ball[i].x < ball[i].r || ball[i].x + ball[i].r > ofGetWidth()) {
-            if (!isOn){
-                ball[i].vx *= -1;
-            }else{
-                vxd *= -1;
-            }
-        }
-        
-        if (ball[i].y < ball[i].r || ball[i].y + ball[i].r > ofGetHeight()) {
-            if (!isOn){
-                ball[i].vy *= -1;
-            }else{
-                vyd *= -1;
-            }
-        }
         //przesuń
         if (!isOn){
-            ball[i].x += ball[i].vx;
-            ball[i].y += ball[i].vy;
+            ball[i].vx = ball[i].vx + f/ball[i].m;
+            ball[i].vy = ball[i].vy + g/ball[i].m;
+            ball[i].x = ball[i].x + ball[i].vx * dt;
+            ball[i].y = ball[i].y + ball[i].vy * dt;
         }else{
-            ball[i].x += vxd;
-            ball[i].y += vyd;
+            float acceleration_x = resistance(ball[i].r, ball[i].vx) / ball[i].m;
+            float acceleration_y = resistance(ball[i].r, ball[i].vy) / ball[i].m;
+            ball[i].vx = ball[i].vx + (f/ball[i].m) + acceleration_x;
+            ball[i].vy = ball[i].vy + (g/ball[i].m) + acceleration_y;
+            ball[i].x = ball[i].x + ball[i].vx * dt;
+            ball[i].y = ball[i].y + ball[i].vy * dt;
         }
+        
+        if (ball[i].x < ball[i].r) {
+            ball[i].vx *= -1;
+            ball[i].x = ball[i].r;
+        }
+        if(ball[i].x + ball[i].r > ofGetWidth()){
+            ball[i].vx *= -1;
+            ball[i].x = ofGetWidth() - ball[i].r;
+        }
+        
+        if (ball[i].y < ball[i].r) {
+            ball[i].vy *= -1;
+            ball[i].y = ball[i].r;
+        }
+        if(ball[i].y + ball[i].r > ofGetHeight()){
+            ball[i].vy *= -1;
+            ball[i].y = ofGetHeight() - ball[i].r;
+        }
+
     }
 }
 
@@ -70,9 +77,11 @@ void ofApp::keyPressed(int key){
     if(key == 'o'){
         std::cout<<"Włączono opór!"<<std::endl;
         isOn = true;
+        f = 0;
     }else if (key == 'f'){
         std::cout<<"Wyłączono opór!"<<std::endl;
         isOn = false;
+        f = 2;
     }
 }
 

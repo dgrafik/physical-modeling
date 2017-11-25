@@ -1,16 +1,17 @@
 #pragma once
 
 #include "ofMain.h"
-#define N 15
+#define N 150
 
 struct Ball {
     float x;
     float y;
     float vx;
     float vy;
-    int r;
-    int R;
-    int G;
+    int r; //promień
+    float m; //masa
+    int R; // kolor
+    int G; // kolor
     int B; // kolor
 };
 
@@ -19,7 +20,7 @@ class ofApp : public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
-		
+    
 		void keyPressed(int key);
 		void keyReleased(int key);
 		void mouseMoved(int x, int y);
@@ -31,8 +32,12 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
+    
+        float dt = 0.1;
+        int g = 9.8;
+        int f = 2;
+        Ball ball[N];
         float resistance (int r, float v);
         bool isOn = false;
-        Ball ball[N];
     
 };
