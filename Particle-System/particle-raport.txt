@@ -1,0 +1,24 @@
+Dominik Grafik
+
+1. Cel - Stworzenie particle system, który będzie interaktywny.
+2. Udało się zrealizować symulację która obsługuje 3 tryby.
+W każdym trybie możemy dodawać cząstki(500) albo je emitować poprzez wciśnięcie klawisza '+' lub 'a'.
+Dodatkowo możemy włączać i wyłączyć cykl życia cząstek (po jakimś okresie stopniowo zanikają do kompletnego usunięcia).
+Pod przyciskiem 'space' resetujemy dany tryb.
+Trzymając przycisk 'h' wstrzymujemy animację.
+3. Z przejściem z 2d na 3d - tu było małe niedopatrzenie z mojej strony, dlatego na chwilę utknąłem na tym.
+Prawidłowe przechodzenie między stanami - początkowo inaczej zaimplementowałem, dlatego im dalej tym było gorzej.
+Po zrobieniu małej refaktoryzacji implementacji stanów i trybów, problemy zostały zażegnane.
+Poprawna implementacja sposobu śledzenia myszki przez particle.
+4.
+''[...]
+}else if(mode == 2){
+        position += velocity.normalize() * 2.4;
+[...]''
+5. Mogę dalej rozwijać projekt dodając coraz więcej trybów i interakcji.
+Wcześniej trzeba wydzielić klasę 'Emiter' która będzie odpowiedzialna za emitowanie cząstek.
+Rozbicie trybów na osobne klasy było by bardzo pomocne i łatwiejsze w utrzymaniu,
+w momencie kiedy wzrośnie liczba trybów.
+
+Projekt -> https://github.com/dgrafik/physical-modeling/tree/master/Particle-System 
+(tylko pliki, które znajdują się w src, gdyż reszta to pliki projektowe dla xcode - przydatne tylko na mac'u)

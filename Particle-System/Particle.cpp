@@ -15,9 +15,9 @@ Particle::Particle(int mode1){
         position.y = ofRandom(5.1, ofGetHeight());
         position.z = ofRandom(0, 23.7);
         
-        velocity.x = ofRandom(-3.9, 3.9);
-        velocity.y = ofRandom(-3.9, 3.9);
-        velocity.z = ofRandom(-3.9, 3.9);
+        velocity.x = ofRandom(-3.5, 3.5);
+        velocity.y = ofRandom(-3.5, 3.5);
+        velocity.z = ofRandom(-3.5, 3.5);
     }else{
         position.x = ofGetWidth()/2;
         position.y = ofGetHeight()/2;
@@ -34,7 +34,7 @@ Particle::Particle(int mode1){
         force = ofPoint(0, 0, 0);
     }
     
-    drag  = ofRandom(0.82, 1.1);
+    drag  = ofRandom(0.82, 0.97);
 }
 
 void Particle::reset(){
