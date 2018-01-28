@@ -5,6 +5,9 @@
 #include <ofColor.h>
 #include <math.h>
 
+Spring::Spring(Pointer* a, Pointer* b): point1(a), point2(b) { }
+Spring::~Spring() { }
+
 float Spring::calcLength()
 {
     return (point1->position - point2->position).length();

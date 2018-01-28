@@ -6,8 +6,8 @@ class Spring
 {
 public:
     
-    Spring(Pointer* a, Pointer* b) : point1(a), point2(b) { }
-    ~Spring() { }
+    Spring(Pointer* a, Pointer* b);
+    ~Spring();
     
     float calcLength();
     
